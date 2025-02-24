@@ -4,7 +4,6 @@ let moviearr = [];
 let template = document.querySelector(".template-movie");
 let container = document.querySelector(".container");
 
-// Function to fetch and display movies
 async function fetchMovies() {
   try {
     let response = await fetch(api);
@@ -17,19 +16,15 @@ async function fetchMovies() {
       let plot = movieElement.querySelector(".plot");
       let year = movieElement.querySelector(".year");
 
-      // Assign movie details
       poster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
       poster.alt = movie.title;
       movieTitle.textContent = movie.title;
-      plot.textContent = movie.overview || "No plot available";
-      year.textContent = `Year: ${
-        movie.release_date ? movie.release_date.split("-")[0] : "N/A"
-      }`;
+      plot.textContent = movie.overview;
+      year.textContent = `Year: ${movie.release_date.split("-")[0]}`;
 
-      // Store movie data for searching
       moviearr.push({
         title: movie.title.toLowerCase(),
-        year: movie.release_date ? movie.release_date.split("-")[0] : "",
+        year: movie.release_date.split("-")[0],
         element: movieElement,
       });
 
@@ -40,10 +35,8 @@ async function fetchMovies() {
   }
 }
 
-// Call function to fetch movies
 fetchMovies();
 
-// Search functionality
 let search = document.getElementById("searchbar");
 
 search.addEventListener("input", (e) => {
